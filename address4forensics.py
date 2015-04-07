@@ -2,14 +2,11 @@
         
  
 Arguments:
-    TEXT  Message to be printed
     offset  the offset
     bytes  the bytes
     address  the address
 
 Options:
-    --count=N  number of times the message will be output
-    --caps  convert the text to upper case
     --partition-start <offset>  same as -b
     -b <offset>  physical address of the start of the partition
     -s <bytes>  bytes per sectors
@@ -36,15 +33,17 @@ if __name__ == '__main__':
 
     print(arguments)
 
-    if arguments['-L'] == True:
+    if arguments['-L'] == True: #Calculating logical address. Requires -c | -p
         if arguments['-b']:
             if arguments['-p']:
                 result = int(arguments['-p'])-int(arguments['-b'])
                 print(result)
-    elif arguments['-P'] == True:
+    elif arguments['-P'] == True: #Calculating physical address. Requires -c | -l
         if arguments['-b']:
             result = int(arguments['-b'])+((int(arguments['-c'])-2)*int(arguments['-k']))+int(arguments['-r'])+(int(arguments['-t'])*int(arguments['-f']))
             print(result)
+    elif arguments['-C'] == True:  #Calculating cluster address. Requires -l | -p
+        print("Option C")
             
     
     #for i in range(count):
