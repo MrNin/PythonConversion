@@ -12,27 +12,40 @@ Options:
 
 from docopt import docopt
 import datetime
+import os
 
 if __name__ == '__main__':
    
     # Parse arguments, use file docstring as a parameter definition
     arguments = docopt(__doc__)
-    print(arguments)
-
+    #print(arguments)
+    temp = 0
     #Perform little endian swap
-    temp = arguments['-x']
+    if arguments['-x']:
+        temp = arguments['-x']
+    else:
+        #filename = "input.txt"
+        #dir = os.path.dirname(filename)
+        #if not os.path.exists(dir):
+        #    os.makedirs(dir)
+        # 
+        with open(arguments['-f'], 'r+') as fin:
+            for line in fin:
+                #print(line)
+                temp = line
+        
     first_two = temp[2:4]
     last_two = temp[4:]
     little_e = last_two+first_two
 
-    print(little_e)
+    #print(little_e)
     #Hex to decimal conversion
     decimal_num = int(little_e, 16)
-    print(decimal_num)
+    #print(decimal_num)
     
     #Dec to bin conversion
     bin_num = decimal_num
-    print(bin_num)
+    #print(bin_num)
     
     #Time conversion - hour(5 bits) minute(6 bits) second(5 bits)
     if arguments['-T'] == True:
@@ -63,7 +76,7 @@ if __name__ == '__main__':
     #Date conversion - year(7 bits) month(4 bits) day(5 bits)
     else:
         
-        print("else")
+        #print("else")
 
         bit_mask = 127
         mask_year = bin_num >> 9
